@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unboxr — Free RAR, ZIP &amp; 7Z extractor for Android. No ads, no trackers.</title>
+<meta name="description" content="Unboxr is a free archive extractor for Android. Open RAR, ZIP, 7Z, TAR, GZ, BZ2 and XZ files, split archives and XAPK packages. No ads, no trackers, no paywall, no internet permission.">
+<meta name="theme-color" content="#0b1220">
+<!-- Change this base URL if the page is published somewhere else. -->
+<link rel="canonical" href="https://fabrizioriccardo73.github.io/unboxr/">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Unboxr">
+<meta property="og:title" content="Unboxr — Free archive extractor for Android">
+<meta property="og:description" content="Open RAR, ZIP, 7Z and more on Android. Browse, preview and verify archives before extracting. No ads, no trackers, no paywall.">
+<meta property="og:url" content="https://fabrizioriccardo73.github.io/unboxr/">
+<meta property="og:image" content="https://fabrizioriccardo73.github.io/unboxr/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="600">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MobileApplication",
+  "name": "Unboxr",
+  "description": "Free archive extractor for Android. Opens RAR, ZIP, 7Z, TAR, GZ, BZ2 and XZ archives, split archives and XAPK packages. No ads, no trackers, fully on-device.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Android 7.0+",
+  "softwareVersion": "1.2.0",
+  "inLanguage": ["en", "it"],
+  "installUrl": "https://play.google.com/store/apps/details?id=com.djfabrix.unboxr",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Fabrizio Riccardo" }
+}
+</script>
+
+<style>
+  :root {
+    --bg: #0b1220;
+    --bg-raised: #131c2e;
+    --bg-card: #18233a;
+    --line: #26344f;
+    --text: #e8eef8;
+    --muted: #9aa9c1;
+    --accent: #38bdf8;
+    --accent-ink: #04202e;
+    --ok: #4ade80;
+    --box: #e0a45c;
+    --radius: 16px;
+    --wrap: 1080px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: var(--accent); }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  h1, h2, h3 { line-height: 1.15; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(1.6rem, 3.6vw, 2.3rem); letter-spacing: -0.02em; }
+  h3 { font-size: 1.08rem; }
+  p { margin: 0; }
+  code { font: 0.9em ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #cfe6f7; }
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 20px; }
+  section { padding: 72px 0; }
+  .eyebrow { color: var(--accent); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .lead { color: var(--muted); max-width: 62ch; margin-top: 14px; }
+
+  /* Header */
+  header { position: sticky; top: 0; z-index: 10; background: rgba(11, 18, 32, 0.86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  header .wrap { display: flex; align-items: center; gap: 24px; height: 64px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 1.15rem; }
+  .brand img { width: 34px; height: 34px; border-radius: 9px; }
+  nav { margin-left: auto; display: flex; gap: 22px; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+  nav a:hover { color: var(--text); }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 1px solid transparent; }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: #7dd3fc; }
+  .btn-ghost { color: var(--text); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--muted); }
+  .btn-small { padding: 9px 14px; font-size: 0.9rem; border-radius: 10px; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+
+  /* Hero */
+  .hero { padding: 64px 0 56px; background: radial-gradient(900px 480px at 78% 0%, rgba(56, 189, 248, 0.16), transparent 70%); }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; }
+  .hero h1 { font-size: clamp(2.2rem, 5.4vw, 3.6rem); letter-spacing: -0.03em; }
+  .hero h1 em { font-style: normal; color: var(--accent); }
+  .hero .lead { font-size: 1.15rem; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .facts { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 22px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 0.92rem; }
+  .facts li::before { content: "✓"; color: var(--ok); margin-right: 6px; font-weight: 700; }
+  .phone { justify-self: center; width: min(300px, 78vw); border-radius: 34px; padding: 9px; background: #05090f; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); }
+  .phone img { border-radius: 26px; }
+
+  /* Zero strip */
+  .zeros { padding: 0; }
+  .zeros .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; padding: 0; }
+  .zeros div { background: var(--bg-raised); padding: 24px 20px; }
+  .zeros b { display: block; font-size: 2rem; line-height: 1; color: var(--ok); font-variant-numeric: tabular-nums; }
+  .zeros span { color: var(--muted); font-size: 0.93rem; }
+
+  /* Feature grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+  .card { background: var(--bg-card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .card .ico { font-size: 1.5rem; line-height: 1; margin-bottom: 14px; }
+  .card p { color: var(--muted); font-size: 0.95rem; margin-top: 8px; }
+
+  /* Formats */
+  .band { background: var(--bg-raised); border-block: 1px solid var(--line); }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
+  .chips li { padding: 8px 16px; border-radius: 999px; background: var(--bg-card); border: 1px solid var(--line); font-weight: 700; font-size: 0.95rem; }
+  .chips li small { color: var(--muted); font-weight: 400; margin-left: 4px; }
+  .note { color: var(--muted); font-size: 0.93rem; margin-top: 20px; max-width: 70ch; }
+
+  /* Privacy */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+  .checks li { background: var(--bg-card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px 16px 48px; position: relative; }
+  .checks li::before { content: "✓"; position: absolute; left: 18px; top: 15px; color: var(--ok); font-weight: 700; }
+  .checks b { display: block; }
+  .checks span { color: var(--muted); font-size: 0.94rem; }
+
+  /* Screenshots */
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 36px; }
+  .shots figure { margin: 0; }
+  .shots img { border-radius: 20px; border: 1px solid var(--line); width: 100%; }
+  .shots figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 10px; text-align: center; }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin-top: 28px; }
+  details { border-bottom: 1px solid var(--line); padding: 18px 0; }
+  summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--accent); font-weight: 400; font-size: 1.3rem; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { color: var(--muted); margin-top: 10px; }
+
+  /* Final CTA + footer */
+  .final { text-align: center; }
+  .final img { width: 96px; height: 96px; border-radius: 24px; margin: 0 auto 24px; }
+  .final .lead { margin-inline: auto; }
+  .final .cta { justify-content: center; }
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: 0.9rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; }
+  footer ul { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; margin: 0; padding: 0; }
+  footer a { color: var(--muted); }
+  footer a:hover { color: var(--text); }
+  .legal { flex-basis: 100%; font-size: 0.8rem; opacity: 0.8; }
+
+  @media (max-width: 860px) {
+    section { padding: 56px 0; }
+    nav { display: none; }
+    header .btn { margin-left: auto; }
+    .hero .wrap, .split { grid-template-columns: 1fr; }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .zeros .wrap { grid-template-columns: 1fr 1fr; margin: 0 20px; }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .shots { grid-template-columns: repeat(3, 72%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+    .shots figure { scroll-snap-align: start; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/icon-192.png" alt="" width="34" height="34">Unboxr</a>
+    <nav aria-label="Sections">
+      <a href="#features">Features</a>
+      <a href="#formats">Formats</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-small" href="https://play.google.com/store/apps/details?id=com.djfabrix.unboxr">Get the app</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Archive extractor for Android</p>
+        <h1>Open any archive on Android. <em>No ads, no trackers, no paywall.</em></h1>
+        <p class="lead">Unboxr opens RAR, ZIP, 7Z and more. Look inside before you extract, preview files, check that a download is intact and pull out only what you need. Everything happens on your phone.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.djfabrix.unboxr">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.86l14.5-8.5a1 1 0 0 0 0-1.72L6.5 2.64A1 1 0 0 0 5 3.5z"/></svg>
+            Get it on Google Play
+          </a>
+          <a class="btn btn-ghost" href="#features">See what it does</a>
+        </div>
+        <ul class="facts">
+          <li>Free, every feature included</li>
+          <li>Android 7.0 and later</li>
+          <li>English and Italian</li>
+        </ul>
+      </div>
+      <div class="phone">
+        <img src="assets/shot-actions.jpg" alt="Unboxr with a ZIP archive selected and the Browse contents, Verify integrity and Extract archive buttons" width="591" height="1280">
+      </div>
+    </div>
+  </div>
+
+  <section class="zeros" aria-label="What Unboxr leaves out">
+    <div class="wrap">
+      <div><b>0</b><span>ads, banners or pop-ups</span></div>
+      <div><b>0</b><span>trackers or analytics SDKs</span></div>
+      <div><b>0</b><span>network access: the app has no internet permission</span></div>
+      <div><b>0</b><span>paid tiers, unlocks or subscriptions</span></div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <p class="eyebrow">Features</p>
+      <h2>Built for the archives other free apps give up on</h2>
+      <p class="lead">Split in parts, several gigabytes large, years old or half broken: Unboxr handles them, on the 7-Zip extraction engine.</p>
+
+      <div class="grid">
+        <div class="card"><div class="ico" aria-hidden="true">📂</div><h3>Browse before extracting</h3><p>See what is inside an archive, sort it, and decide what you need without extracting a single byte.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🎯</div><h3>Extract only what you need</h3><p>Select files or whole folders and extract or share just those.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">👁️</div><h3>Quick Look</h3><p>Preview text and code, images, audio and PDFs straight from the archive.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🧩</div><h3>Split archives</h3><p>Open <code>.part1.rar</code>, <code>.7z.001</code> and <code>.z01</code> sets. If a part is missing, Unboxr tells you which one before it starts.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🛡️</div><h3>Verify integrity</h3><p>Test a download against its checksums without extracting it. You get a clear verdict, or the list of damaged files.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🔎</div><h3>Search inside the archive</h3><p>Search by name, ignoring case and accents, and filter by type: images, videos, documents, code and more.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🩹</div><h3>Damaged archives</h3><p>One broken file no longer stops everything. The intact files are extracted, and you are told which ones were not.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">⚡</div><h3>Instant opening</h3><p>Archives are read in place, with no preliminary copy. Multi-gigabyte files open at once and need no extra free space.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🔐</div><h3>Password-protected archives</h3><p>Open encrypted archives, and retry a wrong password without starting over.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">🔤</div><h3>Readable names in old ZIPs</h3><p>Garbled file names from old Windows, Cyrillic, Japanese, Chinese or Korean archives are fixed automatically, with 23 encodings to pick by hand.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">✋</div><h3>No surprise overwrites</h3><p>When a file already exists you choose: keep both, skip or overwrite. Extractions can be stopped, and partial files are cleaned up.</p></div>
+        <div class="card"><div class="ico" aria-hidden="true">📦</div><h3>XAPK and split APK installer</h3><p>Install apps and games shipped as XAPK, APKM or split APKs, OBB data included.</p></div>
+      </div>
+      <p class="note">Also in the app: open archives from another app's share sheet, drag and drop on tablets and foldables, launcher shortcuts, and Silicon Speed Test, a CPU benchmark built on the 7-Zip LZMA engine.</p>
+    </div>
+  </section>
+
+  <section id="formats" class="band">
+    <div class="wrap">
+      <p class="eyebrow">Formats</p>
+      <h2>What Unboxr opens</h2>
+      <ul class="chips">
+        <li>RAR <small>incl. RAR5</small></li>
+        <li>ZIP</li>
+        <li>7Z</li>
+        <li>TAR</li>
+        <li>GZ <small>/ TGZ</small></li>
+        <li>BZ2</li>
+        <li>XZ</li>
+        <li>XAPK</li>
+        <li>APKS</li>
+        <li>APKM</li>
+      </ul>
+      <p class="note">Split sets are supported as <code>.part1.rar</code>, <code>.rar</code> + <code>.r00</code>, <code>.zip</code> + <code>.z01</code>, <code>.7z.001</code> and <code>.001</code>. Unboxr extracts archives; it does not create them yet.</p>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Privacy</p>
+        <h2>It cannot send your files anywhere</h2>
+        <p class="lead">An archive extractor reads other people's files and your own. Unboxr does not ask Android for internet access, so nothing it opens can leave the device.</p>
+        <div class="cta"><a class="btn btn-ghost" href="privacy.html">Read the privacy policy</a></div>
+      </div>
+      <ul class="checks">
+        <li><b>No data collected</b><span>No account, no analytics, no crash reporting, no usage statistics.</span></li>
+        <li><b>No advertising</b><span>No ad SDKs or ad networks are in the app.</span></li>
+        <li><b>Only the files you pick</b><span>Unboxr uses the Android system file picker, so it reaches only the archives and folders you select.</span></li>
+        <li><b>Safe extraction</b><span>Archives that try to write outside the folder you chose are blocked.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="screenshots" class="band">
+    <div class="wrap">
+      <p class="eyebrow">Screenshots</p>
+      <h2>Pick a file, choose what to do</h2>
+      <div class="shots">
+        <figure><img src="assets/shot-home.jpg" alt="Unboxr home screen with the archive picker" width="591" height="1280" loading="lazy"><figcaption>Pick an archive</figcaption></figure>
+        <figure><img src="assets/shot-actions.jpg" alt="Unboxr with an archive selected: browse contents, verify integrity or extract" width="591" height="1280" loading="lazy"><figcaption>Browse, verify or extract</figcaption></figure>
+        <figure><img src="assets/shot-settings.jpg" alt="Unboxr settings: destination folder, extraction folder, existing files and damaged files" width="591" height="1280" loading="lazy"><figcaption>Set it up your way</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions</h2>
+      <div class="faq">
+        <details>
+          <summary>Is Unboxr really free?</summary>
+          <p>Yes. Every feature is available to everyone. There is no Pro version, no in-app purchase, no subscription and no advertising. If you find it useful you can leave a tip on Ko-fi, which unlocks nothing.</p>
+        </details>
+        <details>
+          <summary>Can it open password-protected RAR and 7Z files?</summary>
+          <p>Yes. Unboxr asks for the password when the archive needs one, and lets you try again if you get it wrong.</p>
+        </details>
+        <details>
+          <summary>Can it open archives split into several parts?</summary>
+          <p>Yes. Select one part, tap "Add parts" and pick the others, or share them to Unboxr all together. It then browses and extracts the set like a single archive.</p>
+        </details>
+        <details>
+          <summary>Can I create ZIP or 7Z archives with it?</summary>
+          <p>Not yet. Unboxr currently opens, previews, verifies and extracts archives.</p>
+        </details>
+        <details>
+          <summary>Which permissions does it need?</summary>
+          <p>It has no internet permission. The only permission it declares is the one that lets it install XAPK and split APK packages, and Android asks you to approve that before the first install.</p>
+        </details>
+        <details>
+          <summary>Which Android versions are supported?</summary>
+          <p>Android 7.0 (Nougat) and later, on phones, tablets and foldables.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final band">
+    <div class="wrap">
+      <img src="assets/icon-192.png" alt="Unboxr app icon" width="96" height="96" loading="lazy">
+      <h2>Unbox your archives</h2>
+      <p class="lead">Free on Google Play, built by an independent developer.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.djfabrix.unboxr">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 3.5v17a1 1 0 0 0 1.5.86l14.5-8.5a1 1 0 0 0 0-1.72L6.5 2.64A1 1 0 0 0 5 3.5z"/></svg>
+          Get it on Google Play
+        </a>
+        <a class="btn btn-ghost" href="https://ko-fi.com/djfabrix">Support on Ko-fi</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Fabrizio Riccardo · Unboxr 1.2.0</span>
+    <ul>
+      <li><a href="https://play.google.com/store/apps/details?id=com.djfabrix.unboxr">Google Play</a></li>
+      <li><a href="privacy.html">Privacy policy</a></li>
+      <li><a href="https://ko-fi.com/djfabrix">Ko-fi</a></li>
+      <li><a href="mailto:djfabrix@gmail.com">Contact</a></li>
+    </ul>
+    <p class="legal">Google Play is a trademark of Google LLC. Unboxr uses the 7-Zip extraction engine and is not affiliated with 7-Zip, RARLAB or Google. This page uses no cookies, analytics or third-party scripts.</p>
+  </div>
+</footer>
+
+</body>
+</html>
